@@ -1,0 +1,8 @@
+Rust Cargo System
+    $(cargo new) creates a package, and a package store crates. Crates can either bin binaries or libraries. These crates contain
+modules. Workspaces are for very large projects; they hold multiple packages. First default crate created is called main.rs. The crate
+root is src/. If you have main.rs in src, then a binary crate with the same name as package will be created. If lib.rs is in 
+src, then by default a library crate is created, and lib.rs will be crate root. A package must have one crate. A package can 
+either have one or zero  library crates, and have any number of binary crates. If more binaries are needed, create a bin folder,
+and in this folder define files, which will be binary crates. When --lib tag is added when creating a new package, then lib.rs will
+be in src by default.  
