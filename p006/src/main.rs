@@ -2,6 +2,12 @@
 use std::fs::File;
 use std::io;
 use std::io::Read;
+use std::net::IpAddr;
+
+/*
+When to use Result vs Option vs !panic?
+    Only used panic! or unwrap in extreme circumstances. Like test code
+*/
 
 fn main() {
     // kills program and prints out errors
@@ -47,9 +53,13 @@ fn main() {
     // let f4 = File::open("another3.txt").expect("Failed to open another3.txt");
 
     // in rust, it's custom to return error in function to caller
-    let s = read_username_from_file();
+    let s = read_from_file_chain();
 
     println!("{:?}", s);
+
+    // Parse ip address
+    let home: IpAddr = "127.0.0.1".parse().unwrap();
+    println!("Home address {}", home);
 }
 
 fn c(num: i32) {
@@ -73,5 +83,13 @@ fn read_username_from_file() -> Result<String, io::Error> {
     //     Err(e) => Err(e),
     // }
     f.read_to_string(&mut s)?;
+    Ok(s)
+}
+
+// Error handling statements can be chained
+fn read_from_file_chain() -> Result<String, io::Error> {
+    let mut s = String::new();
+    // The ? operator can only be used in a function that returns a Result or Option, so can't be used in main
+    File::open("hello.txt")?.read_to_string(&mut s);
     Ok(s)
 }
